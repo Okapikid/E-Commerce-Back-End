@@ -46,7 +46,7 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   // create a new tag
   try {
-    const tagData = await Tag.create(req.body);
+    const newTag = await Tag.create(req.body);
     res.status(200).json(newTag);
   } catch (error) {
     res.status(500).json(error);
@@ -56,11 +56,18 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
   // update a tag's name by its `id` value
   try {
-    const updateTag = await Tag.update(req.body, {
-      where: {
+    const updateTag = await Tag.update(
+      req.body,
+      {
         id: req.params.id,
+        tag_name: req.body.tag_name,
       },
-    });
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    );
     if (!updateTag[0]) {
       res.status(404).json({ message: "Tag does not exist" });
     }
@@ -81,7 +88,7 @@ router.delete("/:id", async (req, res) => {
     if (!deleteTag) {
       res.status(404).json({ message: "Tag does not exist" });
     }
-    res.status(200).json(deleteTag);
+    res.status(200).json({ message: "Tag deleted" });
   } catch (error) {
     res.status(500).json(error);
   }

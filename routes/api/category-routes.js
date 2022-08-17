@@ -67,7 +67,7 @@ router.put("/:id", async (req, res) => {
         },
       }
     );
-    if (!updatedCategory[0]) {
+    if (!updateCategory[0]) {
       res.status(404).json({ message: "Category does not exist" });
     }
     res.status(200).json(updateCategory);
@@ -87,7 +87,7 @@ router.delete("/:id", async (req, res) => {
     if (!deleteCategory) {
       res.status(404).json({ message: "Category does not exist" });
     }
-    res.status(200).json(deleteCategory);
+    res.status(200).json({ message: "Category deleted" });
   } catch {
     res.status(500).json(error);
   }
